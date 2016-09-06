@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <p class="copyright text-muted">&copy; Curso Flask 2016</p>
+        </div>
+      </div>
+    </footer>
+
+    {# <img src="{{ url_for('static', filename='img/test.jpg') }}" alt="Test" /> #}
+
+    {# <script src="{{ url_for('static', filename='js/jquery.js') }}"> </script> #}
+  </body>
+</html>
