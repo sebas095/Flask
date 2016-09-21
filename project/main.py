@@ -3,13 +3,34 @@
 from flask import Flask
 from flask import render_template
 from flask import request
-
+from flask import make_response
+from flask_wtf import CsrfProtect
 import forms
 
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'
+csrf = CsrfProtect(app)
 
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/')
 def index():
+    custome_cookie = request.cookies.get('custome_cookie', 'Undefined')
+    print custome_cookie
+    title = 'Index'
+    return render_template('index.html', title = title)
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    login_form = forms.LoginForm()
+    return render_template('login.html', form = login_form)
+
+@app.route('/cookie')
+def cookie():
+    response = make_response(render_template('cookie.html'))
+    response.set_cookie('custome_cookie', 'Sebastian')
+    return response
+
+@app.route('/comment', methods = ['GET', 'POST'])
+def comment():
     comment_form = forms.CommentForm(request.form)
 
     if request.method == 'POST' and comment_form.validate():
@@ -20,7 +41,7 @@ def index():
         print 'Error en el formulario'
 
     title = "Curso Flask"
-    return render_template('index.html', title = title, form = comment_form)
+    return render_template('comment.html', title = title, form = comment_form)
 
 if __name__ == '__main__':
     app.run(debug = True, port = 8000)
